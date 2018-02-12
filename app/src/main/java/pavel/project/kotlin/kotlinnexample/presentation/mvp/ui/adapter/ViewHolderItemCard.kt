@@ -1,39 +1,39 @@
 package pavel.project.kotlin.kotlinnexample.presentation.mvp.ui.adapter
 
+import android.app.Dialog
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.bumptech.glide.Glide
 import pavel.bogrecov.omertex.data.model.Profile
 import pavel.project.kotlin.kotlinnexample.R
+import pavel.project.kotlin.kotlinnexample.data.api.ApiUrlConfig
+import pavel.project.kotlin.kotlinnexample.data.api.ApiUrlConfig.PHOTO_URL_IMAGE
 
 /**
  * Created by pavel on 21.10.2017.
  */
 
 class ViewHolderItemCard(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    @BindView(R.id.logo_image)
-    var imageLogo: ImageView? = null
-    @BindView(R.id.description_text)
-    var descriptionText: TextView? = null
-    @BindView(R.id.title_text)
-    var titleText: TextView? = null
-    private val view: View? = null
+     var imageLogo: ImageView
+     var descriptionText: TextView
+     var titleText: TextView
 
 
     init {
-        ButterKnife.bind(this, itemView)
-
+        imageLogo = itemView.findViewById(R.id.logo_image)
+        descriptionText = itemView.findViewById(R.id.description_text)
+        titleText = itemView.findViewById(R.id.title_text)
     }
 
 
     fun bind(model: Profile, holderItem: ViewHolderItemCard) {
-      /*  Glide.with(itemView.context)
-                .load(ApiUrlConfig.PHOTO_URL_BASE + PHOTO_URL_IMAGE +
-                        model.photoModel!!.getId()).into(imageLogo!!)
-        nameUser.setText(model.photoModel!!.getAuthor())
+      Glide.with(itemView.context)
+                .load(ApiUrlConfig.PHOTO_URL_BASE + PHOTO_URL_IMAGE + model.idProfile).into(imageLogo)
+        titleText.setText(model.photoModel)
         description.setText(model.photoModel!!.getFilename())
 
         holderItem.getView().setOnClickListener({ v ->
@@ -50,7 +50,7 @@ class ViewHolderItemCard(itemView: View) : RecyclerView.ViewHolder(itemView) {
                     .load(URLAPI.PHOTO_URL_BASE + requestedPhotoWidth + PHOTO_URL_IMAGE +
                             model.photoModel!!.getId()).into(icon)
             dialog.show()
-        })*/
+        })
 
     }
 

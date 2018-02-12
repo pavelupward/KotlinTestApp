@@ -10,7 +10,7 @@ import pavel.project.kotlin.kotlinnexample.R
  * Created by pavel on 21.10.2017.
  */
 
-class MainAdapter : RecyclerView.Adapter<ViewHolderItemCard>() {
+class MainAdapter(val list: List<Profile>) : RecyclerView.Adapter<ViewHolderItemCard>() {
     private var model: List<Profile>? = null
     private var requestedPhotoWidth: Int = 0
 
@@ -23,20 +23,14 @@ class MainAdapter : RecyclerView.Adapter<ViewHolderItemCard>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolderItemCard, position: Int) {
-        val profile = model?.get(position)
-        if (profile != null) {
-            holder.bind(profile, holder)
-        }
+        val item = list.get(position)
+        holder.bind(item, holder)
 
-    }
 
-    fun addItem(model: List<Profile>) {
-        this.model = model
-        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {
-        return model!!.size
+        return list.size
     }
 
     override fun getItemViewType(position: Int): Int {
