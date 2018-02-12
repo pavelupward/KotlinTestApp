@@ -10,11 +10,6 @@ import pavel.bogrecov.omertex.data.model.Profile
 
 interface IViewMain : MvpView {
     fun showList(exampleModels: List<Profile>)
-
     fun showError(error: String)
-
-    fun hideProgress()
-
-    fun showErrorInActivity()
-
+    fun hideError()
 }
