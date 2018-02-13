@@ -2,6 +2,7 @@ package pavel.project.kotlin.kotlinnexample.presentation.mvp.presenter
 
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
+import io.reactivex.disposables.CompositeDisposable
 import pavel.project.kotlin.kotlinnexample.domain.business.NetworkInteractor
 import pavel.project.kotlin.kotlinnexample.presentation.mvp.ui.base.App
 import pavel.project.kotlin.kotlinnexample.presentation.mvp.ui.view.IViewMain
@@ -12,28 +13,28 @@ import javax.inject.Inject
  * Created by pavel on 20.10.2017.
  */
 @InjectViewState
-class PresenterMainActivity : MvpPresenter<IViewMain>() {
+class PresenterMain : MvpPresenter<IViewMain>() {
 
     @Inject
     lateinit var networkInteractor: NetworkInteractor
     @Inject
     lateinit var rxSchedulers: RxSchedulers
-
+    private val compositeDisposable by lazy { CompositeDisposable() }
 
     init {
         App.graph.inject(this)
     }
 
     fun onLoadData(){
-        val allUserProfile = networkInteractor.getAllProfile().subscribeOn(rxSchedulers.io())
-                .observeOn(rxSchedulers.androidThread())
+        compositeDisposable.add(
+                networkInteractor.getAllProfile().subscribeOn(rxSchedulers.io())
+                        .observeOn(rxSchedulers.androidThread()).subscribe({ response -> viewState.showList(response)
+                }))
+    }
 
-        allUserProfile.subscribe { response ->
-            viewState.showList(response)
-//todo dispose
-
-        }
-
+    fun onDestroyView() {
+        compositeDisposable.clear()
+        compositeDisposable.dispose()
     }
     /* if (NetworkUtils.INSTANCE.isNetworkAvailable()) {
             interactorNetwork.getRezult().subscribeOn(rxSchedulers.io())

@@ -14,7 +14,7 @@ import java.util.*
  */
 
 class InteractorNetworkImpl(val iNetworkRepository: RepositoryNetworkImpl,
-                             val userEntityDataMapper : UserEntityDataMapper) : NetworkInteractor {
+                            val userEntityDataMapper: UserEntityDataMapper) : NetworkInteractor {
 
     override fun getResponseFromServer(): Flowable<List<ExampleModel>> {
         return iNetworkRepository.getResponse().map(Arrays::asList)

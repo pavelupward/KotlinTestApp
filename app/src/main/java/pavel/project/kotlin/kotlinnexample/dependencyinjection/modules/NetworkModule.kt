@@ -3,7 +3,6 @@ package pavel.project.kotlin.kotlinnexample.dependencyinjection.modules
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import dagger.Module
 import dagger.Provides
-import io.reactivex.Scheduler
 import okhttp3.OkHttpClient
 import pavel.bogrecov.omertex.data.repository.NetworkRepository
 import pavel.project.kotlin.kotlinnexample.data.api.ApiUrlConfig.BASE_PHOTO
@@ -66,7 +65,7 @@ class NetworkModule {
     @Singleton
     @Provides
     fun provideRxAdapter(): RxJava2CallAdapterFactory {
-        return RxJava2CallAdapterFactory.createWithScheduler(AppRxSchedulers.INTERNET_EXECUTOR as Scheduler)
+        return RxJava2CallAdapterFactory.createWithScheduler(AppRxSchedulers.INTERNET_SCHEDULERS)
     }
 
     @Singleton

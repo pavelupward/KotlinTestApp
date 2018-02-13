@@ -11,11 +11,8 @@ import pavel.project.kotlin.kotlinnexample.R
  */
 
 class MainAdapter(val profile: List<Profile>) : RecyclerView.Adapter<ViewHolderItemCard>() {
-    private var requestedPhotoWidth: Int = 0
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderItemCard {
-        //requestedPhotoWidth = parent.context.resources.displayMetrics.widthPixels
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_card_info, parent, false)
         val viewHolderItemCard = ViewHolderItemCard(view);
         return viewHolderItemCard
@@ -23,7 +20,7 @@ class MainAdapter(val profile: List<Profile>) : RecyclerView.Adapter<ViewHolderI
 
     override fun onBindViewHolder(holder: ViewHolderItemCard, position: Int) {
         val item = profile.get(position)
-        holder.bind(item, holder)
+        holder.bind(item)
     }
 
     override fun getItemCount(): Int {

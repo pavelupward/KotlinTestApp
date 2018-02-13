@@ -1,51 +1,57 @@
 package pavel.project.kotlin.kotlinnexample.presentation.mvp.ui.adapter
 
+import android.app.Dialog
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import pavel.bogrecov.omertex.data.model.Profile
 import pavel.project.kotlin.kotlinnexample.R
-import pavel.project.kotlin.kotlinnexample.data.api.ApiUrlConfig
+import pavel.project.kotlin.kotlinnexample.data.api.ApiUrlConfig.PHOTO_URL_BASE
 import pavel.project.kotlin.kotlinnexample.data.api.ApiUrlConfig.PHOTO_URL_IMAGE
+
+
 
 /**
  * Created by pavel on 21.10.2017.
  */
 
 class ViewHolderItemCard(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    var imageLogo: ImageView = itemView.findViewById(R.id.logo_image)
-    var descriptionText: TextView = itemView.findViewById(R.id.description_text)
-    var titleText: TextView = itemView.findViewById(R.id.title_text)
+    private var imageLogo: ImageView = itemView.findViewById(R.id.logo_image)
+    private var descriptionText: TextView = itemView.findViewById(R.id.description_text)
+    private var titleText: TextView = itemView.findViewById(R.id.title_text)
+    private var requestedPhotoWidth : Int
+    private val requestOptions = RequestOptions()
+    private var url : String? = null
 
 
     init {
-
+        requestedPhotoWidth = itemView.context.getResources().getDisplayMetrics().widthPixels
+        url = PHOTO_URL_BASE  + requestedPhotoWidth + PHOTO_URL_IMAGE
+        requestOptions.placeholder(R.mipmap.ic_launcher)
+        requestOptions.error(R.mipmap.ic_launcher)
     }
 
-
-    fun bind(model: Profile, holderItem: ViewHolderItemCard) {
-        Glide.with(itemView.context)
-                .load(ApiUrlConfig.PHOTO_URL_BASE + PHOTO_URL_IMAGE + model.idProfile).into(imageLogo)
-        titleText.text = model.photoModel?.authorUrl
+    fun bind(model: Profile) {
+        Glide.with(itemView.context).setDefaultRequestOptions(requestOptions)
+                .load(url+ model.photoModel?.id).into(imageLogo)
+        titleText.text = model.photoModel?.author
         descriptionText.text = model.photoModel?.filename
 
-        /*  holderItem.getView().setOnClickListener({ v ->
-              val dialog = Dialog(activity)
-              dialog.setContentView(R.layout.detail_layout)
-              dialog.setTitle("Name " + model.photoModel!!.getFilename())
+        itemView.setOnClickListener({ v ->
+              val dialog = Dialog(itemView.context)
+              dialog.setContentView(R.layout.item_card_info)
               dialog.setCancelable(true)
-              val name = dialog.findViewById<View>(R.id.some_text) as TextView
-              val job = dialog.findViewById<View>(R.id.description) as TextView
-              val icon = dialog.findViewById(R.id.item_hero_image) as ImageView
-              name.setText(model.exModel!!.getBody())
-              job.setText(model.exModel!!.getTitle())
-              Glide.with(view.context)
-                      .load(URLAPI.PHOTO_URL_BASE + requestedPhotoWidth + PHOTO_URL_IMAGE +
-                              model.photoModel!!.getId()).into(icon)
+              val name = dialog.findViewById<View>(R.id.title_text) as TextView
+              val job = dialog.findViewById<View>(R.id.description_text) as TextView
+              val icon = dialog.findViewById(R.id.logo_image) as ImageView
+              name.setText(model.exModel?.bodyPost)
+              job.setText(model.exModel?.titlePost)
+              Glide.with(itemView.context).load(url + model.photoModel?.id).into(icon)
               dialog.show()
-          })*/
+          })
 
     }
 

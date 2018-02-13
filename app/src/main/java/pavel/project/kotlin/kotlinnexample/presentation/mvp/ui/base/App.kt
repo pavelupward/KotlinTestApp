@@ -10,13 +10,10 @@ class App : Application() {
     companion object {
         lateinit var graph: AppComponent
     }
-
     override fun onCreate() {
         super.onCreate()
+        graph = DaggerAppComponent.builder().build()
 
-        graph = DaggerAppComponent
-                .builder()
-                .build()
     }
 
 }
