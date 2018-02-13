@@ -1,8 +1,7 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 26
@@ -36,9 +35,11 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-compiler:2.14'
 
     //Dagger-Android
-    implementation 'com.google.dagger:dagger-android:2.14'
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.14'
-    implementation 'com.google.dagger:dagger-android-support:2.14'
+    implementation 'com.google.dagger:dagger-android:2.14.1'
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.14.1'
+    implementation 'com.google.dagger:dagger-android-support:2.14.1'
+    kapt "com.google.dagger:dagger-compiler:2.14.1"
+    kapt "com.google.dagger:dagger-android-processor:2.14.1"
 
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'io.reactivex.rxjava2:rxjava:2.1.8'

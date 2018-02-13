@@ -7,6 +7,12 @@ import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
 class AppRxSchedulers : RxSchedulers {
+    companion object {
+        var BACKGROUND_EXECUTOR: Executor = Executors.newCachedThreadPool()
+        var BACKGROUND_SCHEDULERS = Schedulers.from(BACKGROUND_EXECUTOR)
+        var INTERNET_EXECUTOR: Executor = Executors.newCachedThreadPool()
+        var INTERNET_SCHEDULERS = Schedulers.from(INTERNET_EXECUTOR)
+    }
 
     override fun runOnBackground(): Scheduler {
         return BACKGROUND_SCHEDULERS
@@ -28,12 +34,5 @@ class AppRxSchedulers : RxSchedulers {
         return INTERNET_SCHEDULERS
     }
 
-    companion object {
 
-
-        var backgroundExecutor: Executor = Executors.newCachedThreadPool()
-        var BACKGROUND_SCHEDULERS = Schedulers.from(backgroundExecutor)
-        var internetExecutor: Executor = Executors.newCachedThreadPool()
-        var INTERNET_SCHEDULERS = Schedulers.from(internetExecutor)
-    }
 }

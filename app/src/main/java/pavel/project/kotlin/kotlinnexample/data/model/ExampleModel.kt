@@ -6,15 +6,13 @@ import com.google.gson.annotations.SerializedName
  * Created by pavel on 20.10.2017.
  */
 
-class ExampleModel {
-    @SerializedName("title")
-    var titlePost: String? = null
-    @SerializedName("body")
-    var bodyPost: String? = null
-    @SerializedName("userId")
-    var userId: Int? = null
-    @SerializedName("id")
-    var idPost: Int? = null
-
-
-}
+data class ExampleModel(
+        @SerializedName("title")
+        var titlePost: String,
+        @SerializedName("body")
+        var bodyPost: String,
+        @SerializedName("userId")
+        var userId: Int,
+        @SerializedName("id")
+        var idPost: Int
+)

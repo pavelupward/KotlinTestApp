@@ -13,8 +13,8 @@ import java.util.*
  * Created by pavel on 21.10.2017.
  */
 
-class InteractorNetworkImpl(private val iNetworkRepository: RepositoryNetworkImpl,
-                            private val userEntityDataMapper : UserEntityDataMapper) : NetworkInteractor {
+class InteractorNetworkImpl(val iNetworkRepository: RepositoryNetworkImpl,
+                             val userEntityDataMapper : UserEntityDataMapper) : NetworkInteractor {
 
     override fun getResponseFromServer(): Flowable<List<ExampleModel>> {
         return iNetworkRepository.getResponse().map(Arrays::asList)

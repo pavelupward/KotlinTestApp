@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.view.View
 import android.widget.ProgressBar
-import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.error_internet_view.*
@@ -12,13 +11,14 @@ import pavel.bogrecov.omertex.data.model.Profile
 import pavel.project.kotlin.kotlinnexample.R
 import pavel.project.kotlin.kotlinnexample.presentation.mvp.presenter.PresenterMainActivity
 import pavel.project.kotlin.kotlinnexample.presentation.mvp.ui.adapter.MainAdapter
+import pavel.project.kotlin.kotlinnexample.presentation.mvp.ui.base.BaseActivity
 import pavel.project.kotlin.kotlinnexample.presentation.mvp.ui.view.IViewMain
 
-class MainActivity : MvpAppCompatActivity(), IViewMain {
+class MainActivity : BaseActivity(), IViewMain {
 
     @InjectPresenter
     lateinit var presenter: PresenterMainActivity
-    private lateinit var progressBar : ProgressBar
+     lateinit var progressBar : ProgressBar
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,6 +26,11 @@ class MainActivity : MvpAppCompatActivity(), IViewMain {
         setContentView(R.layout.activity_main)
         recyclerViewCard.layoutManager = GridLayoutManager(this, 3)
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+        presenter.onLoadData()
     }
 
     override fun showList(exampleModels: List<Profile>) {
