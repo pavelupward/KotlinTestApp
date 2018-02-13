@@ -11,28 +11,30 @@ import pavel.project.kotlin.kotlinnexample.data.api.ApiUrlConfig.BASE_URL
 import pavel.project.kotlin.kotlinnexample.data.api.JsonApi
 import pavel.project.kotlin.kotlinnexample.data.api.PhotoApi
 import pavel.project.kotlin.kotlinnexample.data.mapper.UserEntityDataMapper
-import pavel.project.kotlin.kotlinnexample.dependencyinjection.scopes.ActivityScope
-import pavel.project.kotlin.kotlinnexample.domain.biusness.InteractorNetworkImpl
-import pavel.project.kotlin.kotlinnexample.domain.biusness.NetworkInteractor
+import pavel.project.kotlin.kotlinnexample.domain.business.InteractorNetworkImpl
+import pavel.project.kotlin.kotlinnexample.domain.business.NetworkInteractor
 import pavel.project.kotlin.kotlinnexample.rxschedulers.rx.AppRxSchedulers
+import pavel.project.kotlin.kotlinnexample.rxschedulers.rx.RxSchedulers
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
 
 @Module
 class NetworkModule {
-    @ActivityScope
+    @Singleton
     @Provides
     fun provideUserEntityDataMapper(): UserEntityDataMapper {
         return UserEntityDataMapper()
     }
 
-    @ActivityScope
+    @Singleton
     @Provides
     fun provideInteractorNetwork(iNetworkRepository: NetworkRepository, userEntityDataMapper: UserEntityDataMapper): NetworkInteractor {
         return InteractorNetworkImpl(iNetworkRepository, userEntityDataMapper)
     }
+    /**/
 
-    @ActivityScope
+    @Singleton
     @Provides
     fun provideApiService(client: OkHttpClient): JsonApi {
         val retrofit = Retrofit.Builder().client(client).baseUrl(BASE_URL)
@@ -40,7 +42,7 @@ class NetworkModule {
         return retrofit.create(JsonApi::class.java)
     }
 
-    @ActivityScope
+    @Singleton
     @Provides
     fun providePhotoApiService(client: OkHttpClient): PhotoApi {
         val retrofit = Retrofit.Builder().client(client).baseUrl(BASE_PHOTO)
@@ -48,27 +50,33 @@ class NetworkModule {
         return retrofit.create(PhotoApi::class.java)
     }
 
-    @ActivityScope
+    @Singleton
     @Provides
     fun providerNetworkRepository(jsonAPI: JsonApi, photoApi: PhotoApi): NetworkRepository {
         return NetworkRepository(jsonAPI, photoApi)
     }
 
-    @ActivityScope
+    @Singleton
     @Provides
     fun provideHttpClient(): OkHttpClient {
 
         return OkHttpClient().newBuilder().build()
     }
 
-    @ActivityScope
+    @Singleton
     @Provides
-     fun provideRxAdapter(): RxJava2CallAdapterFactory {
+    fun provideRxAdapter(): RxJava2CallAdapterFactory {
         return RxJava2CallAdapterFactory.createWithScheduler(AppRxSchedulers.INTERNET_EXECUTOR as Scheduler)
     }
 
+    @Singleton
     @Provides
-     fun provideGsonClient(): GsonConverterFactory {
+    fun provideAppRxSchedulers(): RxSchedulers {
+        return AppRxSchedulers();
+    }
+
+    @Provides
+    fun provideGsonClient(): GsonConverterFactory {
         return GsonConverterFactory.create()
     }
 

@@ -2,7 +2,7 @@ package pavel.project.kotlin.kotlinnexample.presentation.mvp.presenter
 
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
-import pavel.project.kotlin.kotlinnexample.domain.biusness.InteractorNetworkImpl
+import pavel.project.kotlin.kotlinnexample.domain.business.NetworkInteractor
 import pavel.project.kotlin.kotlinnexample.presentation.mvp.ui.base.App
 import pavel.project.kotlin.kotlinnexample.presentation.mvp.ui.view.IViewMain
 import pavel.project.kotlin.kotlinnexample.rxschedulers.rx.RxSchedulers
@@ -15,7 +15,7 @@ import javax.inject.Inject
 class PresenterMainActivity : MvpPresenter<IViewMain>() {
 
     @Inject
-    lateinit var networkInteractor: InteractorNetworkImpl
+    lateinit var networkInteractor: NetworkInteractor
     @Inject
     lateinit var rxSchedulers: RxSchedulers
 
@@ -25,8 +25,14 @@ class PresenterMainActivity : MvpPresenter<IViewMain>() {
     }
 
     fun onLoadData(){
-        networkInteractor.getAllProfile().subscribeOn(rxSchedulers.io())
-                .observeOn(rxSchedulers.androidThread()).subscribe()
+        val allUserProfile = networkInteractor.getAllProfile().subscribeOn(rxSchedulers.io())
+                .observeOn(rxSchedulers.androidThread())
+
+        allUserProfile.subscribe { response ->
+            viewState.showList(response)
+//todo dispose
+
+        }
 
     }
     /* if (NetworkUtils.INSTANCE.isNetworkAvailable()) {

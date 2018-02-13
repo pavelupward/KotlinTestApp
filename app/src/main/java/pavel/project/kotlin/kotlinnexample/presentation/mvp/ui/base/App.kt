@@ -1,18 +1,11 @@
 package pavel.project.kotlin.kotlinnexample.presentation.mvp.ui.base
 
 
-import android.app.Activity
 import android.app.Application
-import javax.inject.Inject
-
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
 import pavel.project.kotlin.kotlinnexample.dependencyinjection.components.AppComponent
+import pavel.project.kotlin.kotlinnexample.dependencyinjection.components.DaggerAppComponent
 
-class App : Application(), HasActivityInjector {
-    @Inject
-    lateinit var activityDispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
+class App : Application() {
 
     companion object {
         lateinit var graph: AppComponent
@@ -23,10 +16,7 @@ class App : Application(), HasActivityInjector {
 
         graph = DaggerAppComponent
                 .builder()
-                .build().inject(this)
+                .build()
     }
 
-    override fun activityInjector(): DispatchingAndroidInjector<Activity> {
-        return activityDispatchingAndroidInjector
-    }
 }

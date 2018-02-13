@@ -1,4 +1,4 @@
-package pavel.project.kotlin.kotlinnexample.domain.biusness
+package pavel.project.kotlin.kotlinnexample.domain.business
 
 import io.reactivex.Flowable
 import pavel.bogrecov.omertex.data.model.Profile

@@ -18,7 +18,7 @@ class MainActivity : BaseActivity(), IViewMain {
 
     @InjectPresenter
     lateinit var presenter: PresenterMainActivity
-     lateinit var progressBar : ProgressBar
+    private var progressBar : ProgressBar ?= null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
