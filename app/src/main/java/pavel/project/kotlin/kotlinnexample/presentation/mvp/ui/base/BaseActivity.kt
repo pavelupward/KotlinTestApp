@@ -12,7 +12,7 @@ import javax.inject.Inject
 abstract class BaseActivity : MvpAppCompatActivity(), HasSupportFragmentInjector {
 
     @Inject
-    var fragmentInjector: DispatchingAndroidInjector<Fragment>? = null
+    lateinit var fragmentInjector: DispatchingAndroidInjector<Fragment>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)

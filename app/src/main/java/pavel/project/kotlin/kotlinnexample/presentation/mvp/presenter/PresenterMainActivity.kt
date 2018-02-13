@@ -2,7 +2,7 @@ package pavel.project.kotlin.kotlinnexample.presentation.mvp.presenter
 
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
-import pavel.project.kotlin.kotlinnexample.domain.biusness.NetworkInteractor
+import pavel.project.kotlin.kotlinnexample.domain.biusness.InteractorNetworkImpl
 import pavel.project.kotlin.kotlinnexample.presentation.mvp.ui.base.App
 import pavel.project.kotlin.kotlinnexample.presentation.mvp.ui.view.IViewMain
 import pavel.project.kotlin.kotlinnexample.rxschedulers.rx.RxSchedulers
@@ -15,7 +15,7 @@ import javax.inject.Inject
 class PresenterMainActivity : MvpPresenter<IViewMain>() {
 
     @Inject
-    lateinit var networkInteractor: NetworkInteractor
+    lateinit var networkInteractor: InteractorNetworkImpl
     @Inject
     lateinit var rxSchedulers: RxSchedulers
 
